@@ -1,0 +1,146 @@
+\documentclass[12pt,a4paper,twoside]{scrreprt}
+
+% extensions
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lato} % font family
+\usepackage{graphicx}
+\usepackage[francais]{babel}
+\usepackage{multicol}
+\usepackage{setspace}
+\onehalfspacing 
+
+\usepackage{etoolbox}
+\AtBeginEnvironment{quote}{\par\singlespacing\small}
+
+\titlehead{
+	\begin{minipage}{0.35\textwidth}
+		\includegraphics{pictures/unicaen}
+	\end{minipage}
+	\vrule
+	\hfill
+	\begin{minipage}{0.6\textwidth}
+		\Large
+		\centering
+		\textsc{Master Informatique}\\
+		Internet, Données et Connaissances 
+		\vfill
+	\end{minipage}
+}
+
+\subject{Mémoire de stage}
+
+\title{Systèmes NLP et NLU en entreprise}
+
+\subtitle{
+	Utilisation des services de traitement du langage naturel au service de l'utilisateur\\
+	\vspace{0.3cm}
+	\includegraphics{pictures/kmb}
+}
+
+\author{Clément Vétillard}
+
+
+\date{\vfill}
+
+\publishers{\small
+	\begin{minipage}[b][][b]{0.55\textwidth}
+		Tuteur de stage :
+		\textbf{Marc Spaniol}\\
+		Maitre de stage :
+		\textbf{Paul Leménager}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b][][b]{0.4\textwidth}
+		Entreprise d'accueil : KMB Labs\\
+		Année universitaire : 2020 / 2021
+	\end{minipage}
+}
+
+\begin{document}
+
+\maketitle
+
+\abstract{}
+
+\tableofcontents
+\thispagestyle{empty}
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+KMB Labs\footnote{Anciennement Kick My Bot} est une entreprise de développement web spécialisé dans les assistants conversationnels et moteurs de recherches. L'équipe propose à ses clients d'intégrer, au choix, un moteur de recherche spécifique au site client ainsi qu'un assistant chatbot.
+
+Avec en tout 6 employés, KMB Labs possède à son actif plusieurs projets menés à bien dont la plupart sont connus du grand public, tant dans l'immobilier (\textit{Guy Hoquet}, \textit{Century 21}) que dans le recrutement (\textit{Adecco}, \textit{Carrefour}, \textit{La Poste}).
+
+Le domaine des entreprises visées par l'expertise de KMB Labs tant à se diversifier afin d'accueillir des chatbots spécialisés dans d'autres domaines (comme des chatbot interne à une entreprise mise à disposition pour ses employés).
+
+\begin{quote}
+	\og \textit{Nous mettons en relation la dernière génération d'algorithmes de matching avec notre technologie d'analyse texte - et tout cela en une fraction de seconde.}\fg{}\\
+	\textbf{Vu sur kmblabs.com}
+\end{quote}
+
+Lors de ce stage, plusieurs missions m'ont été confiées afin de participer à la mise en place de différentes fonctionnalités afin d'améliorer les applications déjà en place.
+
+\chapter{Contexte}
+Notre époque connait un nombre croissant d'entreprises choisissant de réaliser une vitrine sur le web et d'y proposer des services via celui-ci. Certains site peuvent devenir une structure conséquente de données, aussi bien dû aux nombreux services proposés qu'aux informations dont ils disposent. Même si certaines pratiques, commes les foires aux questions, tandent à regrouper les questions les plus fréquentes des utilisateurs, cela ne saurait regrouper efficacement toutes les informations d'un site.
+
+Pour remédier à cette problématiques, plusieurs approches ont été utilisées. Les barres de recherches, indexant le contenu des différentes pages ainsi que des fenêtres permettant de communiquer avec un support sous la forme d'une discussion.
+
+Cependant, la première approche n'est pas forcément intuitive pour les plus néophites (là où on recherche une certaine information, il faudra choisir les bons mot-clefs pour obtenir le résultat escompté). La deuxième solution nécessite du personnel pour répondre aux questions des utilisateurs.
+
+Avec l'émergence des systèmes de NLP\footnote{Natural Language Processing} chacune de ses deux approchent ont pu grandement évoluée. Ces outils permettent d'avoir une compréhension plus profonde de ce que recherche l'utilisateur afin de l'aiguiller vers le contenu qu'il recherche avec une plus grande facilité.
+
+L'objectif ici est de permettre à l'utilisateur de faire des requêtes à une interface en formant des phrases ou bien en parlant via un micro. Cette solution permet d'avoir une solution conviviale pour répondre aux questions de l'utilisateur et de pouvoir le rediriger vers le contenu souhaité rapidement, sans mobiliser de personnel.
+
+\section{Les intentions}
+
+Les différentes parties de se rapport seront étroitement liées aux intentions. Les différents services proposés par KMB Labs cherche à détecter l'intention de l'utilisateur pour lui fournir la réponse la plus appropriée.
+
+Ainsi, les différentes entités grammaticales\footnote{Sujet, action, etc...} nécessaires à la réalisation de l'intention sont extraites. De fait, une utilisateur cherchant à contacter une personne de l'entreprise pourra formuler sa demande de plusieurs façons :
+\begin{itemize}
+	\item \og je peux joindre quelqu'un de chez vous ?\fg{}
+	\item \og vous avez un numéro de téléphone ?\fg{}
+	\item \og j'ai besoin de vous contacter, je fais comment ?\fg{}
+	\item etc...
+\end{itemize}
+
+Toutes ses manières, et bien d'autres encore, permettent de rediriger vers une page précise contenant les informations, ou bien de donner les informations nécessaire à la prise de contact.
+
+\chapter{Projets}
+Afin de procurer ses services, KMB Labs a développé plusieurs applications et services web. Faisons une courte présentation de chacun de ses projets afin d'appréhender l'organisation de ceux-ci.
+
+\section{Les interfaces}
+\subsection{Le chatbot}
+
+Le chatbot se présente comme une fenêtre de discussion, on peut y converser avec un assistant virtuel qui répondre à nos questions. En parlant naturellement via l'interface, l'intention de l'utilisateur y est détectée et une réponse lui ai donné.
+
+Ladite réponse est préalablement fournie par le client afin de choisir quelles interrogations sont prises en charge, ou non, par l'assistant virtuel.
+
+La fenêtre peut-être agrémentée d'un onglet avec des questions pré-établies, un peu à la manière des foires aux questions, d'actions rapide où l'utilisateur n'a qu'à cliquer dessus pour obtenir le résultat rapidement.
+
+\subsection{L'interface conversationnelle}
+L'interface conversation prend la forme d'une barre de recherche sur une page complète. L'utilisateur peut décrire ce qu'il recherche (caractéristiques d'un appartement, les domaines de compétences d'un emploi, etc...) et le moteur se charge de :
+\begin{enumerate}
+	\item voir si une intention est détectée (à la manière du chatbot)
+	\item effectuer la recherche en appliquant les filtres trouvés la requête (localisation, salaire, loyer, etc...)
+\end{enumerate}
+
+Cette interface se présente plus comme un moteur de recherche, mais l'intégration des systèmes NLP permettent une certaines flexibilités quant à la forme de la demande de l'utilisateur. Elle simplifie également l'utilisation, là où différents filtres (toujours existants) devaient être rempli manuellement, l'interface ici va remplir les filtres correspondant aux critères de recherche.
+
+\section{Le backoffice}
+
+Le backoffice est l'interface permettant de fournir les réponses aux différentes intentions. C'est là que le client, ou bien des membres de KMB Labs, renseignent les informations nécessaires pour permettre aux différentes interface de fournir une réponse à une intention.
+
+D'autres outils sont également présent, comme une page de statistique pour visualiser l'usage des différentes interfaces, ou bien une page de monitoring permettant de tester des phrases censées être associée à une intention.
+
+Une page permettant de tester un chatbot fonctionnel est également disponible, afin d'observer le résultat final en action, sans pour autant le déployer.
+
+\section{L'API}
+
+\chapter{Réflexion}
+% think about the meaning of life
+
+\chapter{Conslusion}
+% conclude
+\end{document}
