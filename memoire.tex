@@ -105,7 +105,7 @@ Ainsi, les différentes entités grammaticales\footnote{Sujet, action, etc...} n
 	\item etc...
 \end{itemize}
 
-Toutes ses manières, et bien d'autres encore, permettent de rediriger vers une page précise contenant les informations, ou bien de donner les informations nécessaire à la prise de contact.
+Toutes ses manières, et bien d'autres encore, permettent de rediriger vers une page précise contenant les informations, ou bien de donner les informations nécessaire à la prise de contact. L'important est que l'\textit{intention} de l'utilisateur pour toutes ces phrases est la même.
 
 \chapter{Projets}
 Afin de procurer ses services, KMB Labs a développé plusieurs applications et services web. Faisons une courte présentation de chacun de ses projets afin d'appréhender l'organisation de ceux-ci.
@@ -130,13 +130,19 @@ Cette interface se présente plus comme un moteur de recherche, mais l'intégrat
 
 \section{Le backoffice}
 
-Le backoffice est l'interface permettant de fournir les réponses aux différentes intentions. C'est là que le client, ou bien des membres de KMB Labs, renseignent les informations nécessaires pour permettre aux différentes interface de fournir une réponse à une intention.
+Le backoffice est une application web permettant au client de paramétrer les réponses qui seront fournies à ses utilisateurs et de s'informer du bon fonctionnement du chatbot.
 
-D'autres outils sont également présent, comme une page de statistique pour visualiser l'usage des différentes interfaces, ou bien une page de monitoring permettant de tester des phrases censées être associée à une intention.
-
-Une page permettant de tester un chatbot fonctionnel est également disponible, afin d'observer le résultat final en action, sans pour autant le déployer.
+Dans cette optique, plusieurs page sont disponible. En voici une présentation non exhausitve :
+\begin{itemize}
+	\item l'éditeur : permet d'accéder aux données des modèles d'apprentissage afin d'y fournir les éléments de réponses pour chaque intention des modèles
+	\item les statistiques : regroupent des graphiques visant à informer le client du taux d'utilisation et de compréhension de sa solution conversationnelle fournie par KMN Labs
+	\item ML\footnote{Machine Learning} Monitor : cette partie, pour utilisateur averti uniquement, permet de tester la compréhension d'une phrase et, s'y besoin, d'entrainer un modèle avec des phrases non comprises qui aurait dû l'être
+	\item le Lab fourni une interface simple permettant de voir la configuration actuellement de la fenêtre du chatbot tel qu'elle serait dans le site de destination mis à part l'environnement graphique
+\end{itemize}
 
 \section{L'API}
+
+\section{Le Framework}
 
 \chapter{Réflexion}
 % think about the meaning of life
