@@ -1,6 +1,7 @@
-memoire.aux
-memoire.fdb_latexmk
-memoire.fls
-memoire.log
-memoire.synctex.gz
-memoire.toc
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.toc
+*.out

@@ -8,6 +8,31 @@
 \usepackage[francais]{babel}
 \usepackage{multicol}
 \usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{mdframed}
+\usepackage[dvipsnames]{xcolor}
+
+
+\newmdenv[
+	rightline=false,
+	topline=false,
+	bottomline=false,
+	backgroundcolor=BurntOrange!5,
+	fontcolor=BrickRed,
+	linecolor=Red,
+	linewidth=1pt]{problem}
+
+
+\newmdenv[
+	rightline=false,
+	topline=false,
+	bottomline=false,
+	backgroundcolor=ForestGreen!5,
+	fontcolor=OliveGreen,
+	linecolor=Green,
+	linewidth=1pt]{result}
+
+
 \onehalfspacing 
 
 \usepackage{etoolbox}
@@ -33,9 +58,9 @@
 \title{Systèmes NLP et NLU en entreprise}
 
 \subtitle{
-	Utilisation des services de traitement du langage naturel au service de l'utilisateur\\
+Le traitement du langage naturel au service de l'utilisateur\\
 	\vspace{0.3cm}
-	\includegraphics{pictures/kmb}
+\includegraphics[scale=0.8]{pictures/kmb}
 }
 
 \author{Clément Vétillard}
@@ -45,14 +70,13 @@
 
 \publishers{\small
 	\begin{minipage}[b][][b]{0.55\textwidth}
-		Tuteur de stage :
-		\textbf{Marc Spaniol}\\
-		Maitre de stage :
-		\textbf{Paul Leménager}
+Tuteur de stage : \textbf{Marc Spaniol}\\
+Jury : \textbf{François Rioult}
 	\end{minipage}
 	\hfill
 	\begin{minipage}[b][][b]{0.4\textwidth}
 		Entreprise d'accueil : KMB Labs\\
+Maitre de stage : \textbf{Paul Leménager}\\
 		Année universitaire : 2020 / 2021
 	\end{minipage}
 }
@@ -107,7 +131,7 @@ Ainsi, les différentes entités grammaticales\footnote{Sujet, action, etc...} n
 
 Toutes ses manières, et bien d'autres encore, permettent de rediriger vers une page précise contenant les informations, ou bien de donner les informations nécessaire à la prise de contact. L'important est que l'\textit{intention} de l'utilisateur pour toutes ces phrases est la même.
 
-\chapter{Projets}
+\chapter{KMB Labs}
 Afin de procurer ses services, KMB Labs a développé plusieurs applications et services web. Faisons une courte présentation de chacun de ses projets afin d'appréhender l'organisation de ceux-ci.
 
 \section{Les interfaces}
@@ -142,10 +166,68 @@ Dans cette optique, plusieurs pages sont disponibles. En voici une présentation
 
 \section{L'API}
 
+L'API a été écrite avec le langage GraphQL avec le service AppSync de Amazon Web Service\footnote{Abrégé \og AWS\fg{} ci-après}. Cette approche permet de ne récupérer que les données nécessaires  à l'usage, et ceux même si la structure et complexe.
+
+AppSync donne la possibilité de lier le schéma à des \textit{resolvers}, qui sont en charge de retourner la donnée voulu. Ce procédé permet une grande flexibilité, les résolvers peuvent être associé à :
+\begin{itemize}
+	\item des requêtes directes aux bases de données (via le langage VTL)
+	\item des \textit{Lambda} qui sont des fonctions dans le langage désiré (Node.js, Python, Go, Java, etc...\footnote{Source : \url{https://aws.amazon.com/fr/lambda/}})
+\end{itemize}
+
+La possibilité de pouvoir lier un résolver à une fonction permet d'y effectuer plusieurs traitement avec que les données ne soient retournées à l'application cliente. Conclusion, cela allège la complexité des applications utilisant les lambdas dans leur cycle de vie, ou plus précisément cela reporte une partie de la charge sur les serveurs d'AWS.
+
 \section{Le Framework}
 
-\chapter{Mes interventions}
-% think about the meaning of life
+\chapter{Projets}
+
+Lors de ce stage, plusieurs projets m'ont été confiés. Dans cette partie je détaillerai mes différentes interventions. J'y détaillerai l'objectif du projet ainsi que les différentes tâches qui m'ont été confiées.
+
+\section{Les templates}
+
+Le premier projet auquel j'ai participé, afin de me faire à l'agencement du Backoffice et de comprendre le fonctionnement des différents éléments qui le composent, avait pour objectif de paramétrer plus rapidement les projets.
+
+Les projets, associé aux clients, doivent être lié à des modèles d'apprentissage pour permettre la compréhension d'un domaine. Faisons la comparaison entre l'immobilier et les ressources humaines.
+
+Dans l'immobilier, le chatbot doit pouvoir comprendre les intentions liées loyer, prix d'achat et de vente, métrage, etc... De l'autre côté, un chatbot lié aux ressources humaines devra comprendre les intentions liés aux horaires de travail, au salaire, etc... En plus des intentions spécifiques au domaine du chatbot vient s'ajouter des intentions plus générales comme les formules de politesse pour saluer l'utilisateur, réponde à ses remerciements et plus encore.
+
+
+\begin{problem}
+Pour associer un modèle de compréhension à un chatbot, une personne de chez KMB Labs devaient jusqu'alors sélectionner manuellement dans les paramètres du projet ledit modèle.
+\end{problem}
+
+\begin{quote}
+	N.B: ce projet est très diversifié dans sa manière de s'intégrer à l'existant, nous verrons que celui-ci touche à beaucoup d'aspect différents du backoffice.
+\end{quote}
+
+\newpage
+\subsection{Objectif}
+
+L'objectif d'ajouter des templates étaient de pouvoir facilement associer plusieurs modèle à un projet en sélectionnant un template. Pour se faire, deux points sont à prendre en compte :
+\begin{itemize}
+	\item la création du template
+	\item l'association à un projet
+\end{itemize}
+
+\subsubsection{La création de template}
+
+Pour créer différents éléments du backoffice (utilisateur, projets, intention) un admin ouvre ce que l'on appelle une \textit{popin}\footnote{interface pouvant s'afficher par dessus le reste de l'application web} en utilisant le bouton correspondant dans les paramètres.
+
+Pour les templates, le même principe a été utilisé. Pour créer un template il faut donc ouvrir la \textit{popin} ce qui ouvre l'interface suivante :
+
+\begin{figure}[h!]
+	\center
+	\includegraphics[width=0.75\textwidth]{pictures/popin_create_templates.png}
+\end{figure}
+
+L'objectif ici était donc d'ajouter une nouvelle \textit{popin} à l'interface en utilisant l'existant. React étant orienté composant, il est très facile de réutiliser l'existant : le squelette de la fenêtre était déjà réalisé, il ne me restait plus qu'à comprendre comment une \textit{popin} était affichée.
+
+En effet la gestion de celle-ci passe par un \textit{store} Redux\footnote{\href{https://redux.js.org}{\og\textit{A Predictable State Container for JS Apps}\fg{} \textbf{Vu sur redux.js.org} }}. Le gestionnaire des \textit{popins} est toujours affiché, cependant une \textit{popin} n'est affichée seulement si son identifiant est présent dans le store.
+
+\section{ML Monitor}
+
+\section{}
+
+\section{Interface conversationnelle}
 
 \chapter{Conslusion}
 % conclude
