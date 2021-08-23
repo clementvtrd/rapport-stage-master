@@ -1,11 +1,11 @@
-\documentclass[12pt,a4paper,twoside]{scrreprt}
+\documentclass[12pt,a4paper,oneside]{scrreprt}
 
 % extensions
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lato} % font family
 \usepackage{graphicx}
-\usepackage[francais]{babel}
+\usepackage[french,english]{babel}
 \usepackage{multicol}
 \usepackage{setspace}
 \usepackage{hyperref}
@@ -31,6 +31,24 @@
 	fontcolor=OliveGreen,
 	linecolor=Green,
 	linewidth=1pt]{result}
+
+\newmdenv[
+	rightline=false,
+	topline=false,
+	bottomline=false,
+	backgroundcolor=Cyan!5,
+	fontcolor=Blue,
+	linecolor=NavyBlue,
+	linewidth=1pt]{info}
+
+\newenvironment{abstractpage}
+{\cleardoublepage\vspace*{\fill}\thispagestyle{empty}}
+{\vfill\cleardoublepage}
+
+\renewenvironment{abstract}[1]
+{\bigskip\selectlanguage{#1}%
+	\begin{center}\bfseries\abstractname\end{center}}
+{\par\bigskip}
 
 
 \onehalfspacing 
@@ -83,13 +101,25 @@ Maitre de stage : \textbf{Paul Leménager}\\
 
 \begin{document}
 
-\maketitle
+\pagenumbering{gobble}
 
-\abstract{}
+\maketitle
 
 \tableofcontents
 \thispagestyle{empty}
 \addtocontents{toc}{\protect\thispagestyle{empty}}
+
+\begin{abstractpage}
+	\begin{abstract}{french}
+		Résumé en français
+	\end{abstract}
+
+	\begin{abstract}{english}
+		English resume
+	\end{abstract}
+\end{abstractpage}
+
+\pagenumbering{arabic}
 
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
@@ -121,12 +151,12 @@ L'objectif ici est de permettre à l'utilisateur de faire des requêtes à une i
 
 Les différentes parties de se rapport seront étroitement liées aux intentions. Les différents services proposés par KMB Labs cherche à détecter l'intention de l'utilisateur pour lui fournir la réponse la plus appropriée.
 
-Ainsi, les différentes entités grammaticales\footnote{Sujet, action, etc...} nécessaires à la réalisation de l'intention sont extraites. De fait, une utilisateur cherchant à contacter une personne de l'entreprise pourra formuler sa demande de plusieurs façons :
+Ainsi, les différentes entités grammaticales\footnote{Sujet, action, etc\dots} nécessaires à la réalisation de l'intention sont extraites. De fait, une utilisateur cherchant à contacter une personne de l'entreprise pourra formuler sa demande de plusieurs façons :
 \begin{itemize}
 	\item \og je peux joindre quelqu'un de chez vous ?\fg{}
 	\item \og vous avez un numéro de téléphone ?\fg{}
 	\item \og j'ai besoin de vous contacter, je fais comment ?\fg{}
-	\item etc...
+	\item etc\dots
 \end{itemize}
 
 Toutes ses manières, et bien d'autres encore, permettent de rediriger vers une page précise contenant les informations, ou bien de donner les informations nécessaire à la prise de contact. L'important est que l'\textit{intention} de l'utilisateur pour toutes ces phrases est la même.
@@ -144,21 +174,21 @@ Ladite réponse est préalablement fournie par le client afin de choisir quelles
 La fenêtre peut-être agrémentée d'un onglet avec des questions pré-établies, un peu à la manière des foires aux questions, d'actions rapide où l'utilisateur n'a qu'à cliquer dessus pour obtenir le résultat rapidement.
 
 \subsection{L'interface conversationnelle}
-L'interface conversation prend la forme d'une barre de recherche sur une page complète. L'utilisateur peut décrire ce qu'il recherche (caractéristiques d'un appartement, les domaines de compétences d'un emploi, etc...) et le moteur se charge de :
+L'interface conversation prend la forme d'une barre de recherche sur une page complète. L'utilisateur peut décrire ce qu'il recherche (caractéristiques d'un appartement, les domaines de compétences d'un emploi, etc\dots) et le moteur se charge de :
 \begin{enumerate}
 	\item voir si une intention est détectée (à la manière du chatbot)
-	\item effectuer la recherche en appliquant les filtres trouvés la requête (localisation, salaire, loyer, etc...)
+	\item effectuer la recherche en appliquant les filtres trouvés la requête (localisation, salaire, loyer, etc\dots)
 \end{enumerate}
 
 Cette interface se présente plus comme un moteur de recherche, mais l'intégration des systèmes NLP permettent une certaines flexibilités quant à la forme de la demande de l'utilisateur. Elle simplifie également l'utilisation, là où différents filtres (toujours existants) devaient être rempli manuellement, l'interface ici va remplir les filtres correspondant aux critères de recherche.
 
-\section{Le backoffice}
+\section{Le Backoffice}
 
-Le backoffice est une application web permettant au client de paramétrer les réponses qui seront fournies à ses utilisateurs et de s'informer du bon fonctionnement du chatbot.
+Le Backoffice est une application web permettant au client de paramétrer les réponses qui seront fournies à ses utilisateurs et de s'informer du bon fonctionnement du chatbot.
 
 Dans cette optique, plusieurs pages sont disponibles. En voici une présentation non exhausitve :
 \begin{itemize}
-\item l'éditeur : permet de définir les réponses du chatbot pour chaque intention disponible dans le projet
+\item l'éditeur : permet de définir les réponses du chatbot pour chaque intention disponible
 \item les statistiques : regroupent des graphiques visant à informer le client du taux d'utilisation et de compréhension de sa solution conversationnelle fournie par KMB Labs
 \item ML\footnote{Machine Learning} Monitor : cette partie, pour utilisateur averti uniquement, permet de tester la compréhension d'une phrase et, si besoin, d'entrainer un modèle avec des phrases non comprises qui aurait dû l'être
 \item le Lab fourni une interface simple permettant de voir la configuration de la fenêtre du chatbot telle qu'elle serait dans le site de destination mis à part l'environnement graphique
@@ -171,12 +201,14 @@ L'API a été écrite avec le langage GraphQL avec le service AppSync de Amazon 
 AppSync donne la possibilité de lier le schéma à des \textit{resolvers}, qui sont en charge de retourner la donnée voulu. Ce procédé permet une grande flexibilité, les résolvers peuvent être associé à :
 \begin{itemize}
 	\item des requêtes directes aux bases de données (via le langage VTL)
-	\item des \textit{Lambda} qui sont des fonctions dans le langage désiré (Node.js, Python, Go, Java, etc...\footnote{Source : \url{https://aws.amazon.com/fr/lambda/}})
+	\item des \textit{Lambda} qui sont des fonctions dans le langage désiré (Node.js, Python, Go, Java, etc\dots\footnote{Source : \url{https://aws.amazon.com/fr/lambda/}})
 \end{itemize}
 
 La possibilité de pouvoir lier un résolver à une fonction permet d'y effectuer plusieurs traitement avec que les données ne soient retournées à l'application cliente. Conclusion, cela allège la complexité des applications utilisant les lambdas dans leur cycle de vie, ou plus précisément cela reporte une partie de la charge sur les serveurs d'AWS.
 
 \section{Le Framework}
+
+Le Framework est la base de chaque serveur derrière le chatbot. Il est nécessaire pour mettre en ligne une instance unique à chaque client qui va prendre en charge chaque requête des différentes interfaces.
 
 \chapter{Projets}
 
@@ -188,7 +220,7 @@ Le premier projet auquel j'ai participé, afin de me faire à l'agencement du Ba
 
 Les projets, associé aux clients, doivent être lié à des modèles d'apprentissage pour permettre la compréhension d'un domaine. Faisons la comparaison entre l'immobilier et les ressources humaines.
 
-Dans l'immobilier, le chatbot doit pouvoir comprendre les intentions liées loyer, prix d'achat et de vente, métrage, etc... De l'autre côté, un chatbot lié aux ressources humaines devra comprendre les intentions liés aux horaires de travail, au salaire, etc... En plus des intentions spécifiques au domaine du chatbot vient s'ajouter des intentions plus générales comme les formules de politesse pour saluer l'utilisateur, réponde à ses remerciements et plus encore.
+Dans l'immobilier, le chatbot doit pouvoir comprendre les intentions liées loyer, prix d'achat et de vente, surface, etc\dots De l'autre côté, un chatbot lié aux ressources humaines devra comprendre les intentions liés aux horaires de travail, au salaire, etc\dots En plus des intentions spécifiques au domaine du chatbot vient s'ajouter des intentions plus générales comme les formules de politesse pour saluer l'utilisateur, réponde à ses remerciements et plus encore.
 
 
 \begin{problem}
@@ -196,7 +228,7 @@ Pour associer un modèle de compréhension à un chatbot, une personne de chez K
 \end{problem}
 
 \begin{quote}
-	N.B: ce projet est très diversifié dans sa manière de s'intégrer à l'existant, nous verrons que celui-ci touche à beaucoup d'aspect différents du backoffice.
+N.B: ce projet est très diversifié dans sa manière de s'intégrer à l'existant, nous verrons que celui-ci touche à beaucoup d'aspect différents du Backoffice.
 \end{quote}
 
 \newpage
@@ -210,12 +242,12 @@ L'objectif d'ajouter des templates étaient de pouvoir facilement associer plusi
 
 \subsubsection{La création de template}
 
-Pour créer différents éléments du backoffice (utilisateur, projets, intention) un admin ouvre ce que l'on appelle une \textit{popin}\footnote{interface pouvant s'afficher par dessus le reste de l'application web} en utilisant le bouton correspondant dans les paramètres.
+Pour créer différents éléments du Backoffice (utilisateur, projets, intention) un admin ouvre ce que l'on appelle une \textit{popin}\footnote{interface pouvant s'afficher par dessus le reste de l'application web} en utilisant le bouton correspondant dans les paramètres globaux.
 
 Pour les templates, le même principe a été utilisé. Pour créer un template il faut donc ouvrir la \textit{popin} ce qui ouvre l'interface suivante :
 
-\begin{figure}[h!]
-	\center
+\begin{figure}[!ht]
+\centering
 	\includegraphics[width=0.75\textwidth]{pictures/popin_create_templates.png}
 \end{figure}
 
@@ -223,12 +255,223 @@ L'objectif ici était donc d'ajouter une nouvelle \textit{popin} à l'interface 
 
 En effet la gestion de celle-ci passe par un \textit{store} Redux\footnote{\href{https://redux.js.org}{\og\textit{A Predictable State Container for JS Apps}\fg{} \textbf{Vu sur redux.js.org} }}. Le gestionnaire des \textit{popins} est toujours affiché, cependant une \textit{popin} n'est affichée seulement si son identifiant est présent dans le store.
 
+Une fois le composant permettant de créer un template intégré à l'interface, il a fallu le relier à la base de donnée. Pour ce premier projet, le schéma de l'API ainsi que la mutation permettant de modifier la base de données ont été réalisée par mon maître de stage, Paul Leménager. De mon côté, il ne me restait plus qu'à les utiliser en gardant en tête la structure d'une requête GraphQL.
+
+\subsubsection{L'association à un projet}
+
+Associer un template à un projet à soulever des questions :
+\begin{itemize}
+	\item devons nous garder les valeurs existantes ?
+	\item le template doit-il être associé par un identifiant au projet ?
+\end{itemize}
+
+Pour répondre à la deuxième question, il a fallu dans un premier temps définir les templates qui seront disponibles, avec la liste des catégories d'intentions qui leur seront liées. Puis voir si cela concorde avec les projets existants. Il y a quasiment toujours au moins une catégorie qui n'est pas dans le template qui est utilisé dans chacun des projets. De fait, nous devions garder les valeurs existantes, et toujours pouvoir ajouter une catégorie d'intentions sans pour autant ajouter un template.
+
+Pour le second point, la question a été répondue assez aisément. Même si les templates étaient stockés dans la base de données, associer l'identifiant d'un ou de plusieurs templates à un projet aurait demandé des modifications du schéma de l'API, des lambdas concernées et de créer les liaisons nécessaires pour récupérer les catégories associer au templates pour les ajouter à celles existantes du projet. Nous avons donc pris la décision de faire au plus simple : ajouter aux catégories du projets les catégories du templates, en excluant les doublons éventuels.
+
+
+Sur le plan de l'interface, une simple liste déroulante permettant de sélectionner un ou plusieurs templates a été ajouté parmi les différents paramètres pré-existant\footnote{Voir figure \ref{fig:parameters} page \pageref{fig:parameters}}.
+
+\begin{result}
+	La sélection de templates est gérée dynamiquement en fonction des catégories sélectionnées. De fait, si l'on ajoute un template, on étend la liste des catégories actuelle du projet de façon à reproduire le comportement de l'utilisateur.
+
+	Ainsi, si on ajoute ou supprime une catégorie, la liste des templates est mise à jour en fonction des changements, sans que la base de données n'ait été mise à jour pour intégrer les templates aux projets.
+\end{result}
+
+
+\begin{info}
+	Ce premier projet m'a permis d'appréhender les différents concepts qui seront ré-utilisés dans les autres projets liés au Backoffice:
+	\begin{itemize}
+		\item le store Redux
+		\item les \textit{functional component} en React
+		\item les \textit{query} et \textit{mutation} GraphQL
+		\item les \textit{PopIn}
+	\end{itemize}
+
+	Mais aussi les différentes notions propre au domaine de l'entreprise :
+	\begin{itemize}
+		\item les intentions
+		\item les catégories
+		\item les projets
+	\end{itemize}
+\end{info}
+
 \section{ML Monitor}
 
-\section{}
+ML Monitor est un outil visant à tester et entraîner les services NLP utilisés. Il est l'aboutissement de réflexion qui ont vu se succéder deux versions \textit{standalone}\footnote{L'outil se trouvait alors sur une application web externe au Backoffice}. J'ai eu la chance lors de ce stage de participer à l'intégration de cette outil au sein même du Backoffice.
+
+Cette intégration a permis de gérer d'une nouvelle manière l'entraînement ainsi que de tester\footnote{Voir figures pages \pageref{fig:mlmonitor_test}-\pageref{fig:mlmonitor_test}} des modèles de \textit{machine learning}. Une nouvelle API a été mise en place permettant d'unifier les interactions avec plusieurs fournisseurs NLP. Actuellement, deux fournisseurs sont utilisés : WIT et Luis (Microsoft). En utilisant cette interface entre NLP et le Backoffice, il est possible d'interagir les modèles de chaque fournisseur. Cette solution permet d'avoir un fournisseur de secours dans le cas où le fournisseur principal ne serait plus disponible.
+
+\begin{figure}[!ht]
+	\includegraphics[width=\textwidth]{pictures/diagram_mlmonitor.png}
+	\caption{Schéma fonctionnel de ML Monitor}
+\end{figure}
+
+\begin{info}
+	Ce projet étant une nouvelle partie du Backoffice, j'ai pu participer à l'élaboration de l'interface ainsi que la partie concernée de l'API. J'ai donc pu découvrir les technologies suivantes :
+	\begin{itemize}
+		\item AppSync (service AWS pour gérer une API GraphQL)
+		\item Lambda (service AWS associer une fonction Node.JS à un \textit{endpoint})
+		\item DynamoDB et ses requêtes en VTL
+		\item CloudWatch (service AWS permettant de surveiller les différents services)
+		\item Serverless (permet de gérer l'architecture AWS via des fichiers YAML)
+	\end{itemize}
+\end{info}
+
+\subsection{Gestion des fournisseurs NLP}
+
+Un des points auquel j'ai pu participer activement est la gestion de multiple fournisseurs NLP\footnote{Mentionné "provider" ci-après.} sur l'interface.
+
+En effet, même si la venu de l'API permettant d'utiliser plusieurs providers de façon simultanée, il est nécessaire de pouvoir visualiser les données d'un seul en particulier.
+
+La mise en place de cette fonctionnalité dans l'interface a tout d'abord nécessité une nouvelle lambda qui sera ensuite liée au schéma GraphQL. Chaque catégorie d'intentions est liées à au moins un provider pour entraîner un modèle d'apprentissage avec des données traitant un thème commun (\textit{E.G: salutation}).
+
+La lambda, qui se présente sous la forme d'une fonction Node.JS dans notre cas\footnote{Les Lambda AWS supportent de nombreux langages connus comme Node.JS, Python, Java\dots}, se charge donc de récupérer toutes les catégories liées au projet courant afin d'extraire l'ensemble des providers utilisés.
+
+Une fois fait, le schéma GraphQL de l'API a dû être mis à jour avec la nouvelle \textit{query}, et lier la source de données de la \textit{query getProviders} à la lambda en utilisant Serverless.
+
+\section{Éditeur WYSIWYG}
+
+L'éditeur WYSIWYG\footnote{What You See Is What You Get} est un ajout que j'ai pu réaliser, avec l'intégration de Draft.js\footnote{Facebook opensource} et de différents plugins permettant ainsi d'obtenir un éditeur plus agréable pour l'utilisateur.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[scale=0.75]{pictures/wysiwyg.png}
+\end{figure}
+
+Cette éditeur a été utilisé en remplacement d'un éditeur plus basic où le style n'était pas interprété. Le format utilisé nativement par l'éditeur est de l'HTML, cependant un système de conversion a été mis en place afin de correspondre aux formats utilisés dans les fenêtres de discussion de \textit{chatbot}.
+
+\begin{info}
+	L'éditeur est une partie plus accessoire mais qui a vu quelques complications dû à la gestion de l'état de l'éditeur Draft.JS.
+
+	Celui-ci est assez complexe, et comme tous les composants React, doit être prédictible. De fait, chaque modification manuelle implique de reconstruire l'état en utilisant les valeurs précédentes pour garder un éditeur stable (sélection, position du curseur, style, etc\dots).
+\end{info}
+
+\section{ChatWindow}
+
+La section ChatWindow du Backoffice est la dernière partie de cette application sur laquelle j'ai particpé durant mon stage. Cette dernière consiste à paramétrer de façon visuel quelques aspects de la fenêtre de discussion des chatbots.
+
+Entre autres, cette section va permettre de configurer les \textit{Fast Action} qui prennent la forme de bouton au dessus de l'icône du \textit{chatbot} comme le montre l'image suivante.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=5.9cm]{pictures/fa.png}
+	\caption{Image issue du Backoffice illustrant la fenêtre du \textit{chatbot}}
+\end{figure}
+
+L'avantage des \textit{Fast Actions} est que le \textit{chatbot} n'utilise pas les providers afin d'obtenir les résultats, elles sont directement reliées à une intentions ou bien une réponse définie. De cette façon, l'utilisateur du chatbot peut avoir une réponse instantannée en utilisant ces boutons.
+
+Afin de donner une certaine polyvalence aux \textit{Fast Actions}, celle-ci sont regroupées par page. Chaque page possède une configuration qui lui est propre et qui est configurage via l'interface ChatWindow. On peut donc spécifier une URL d'activation, qui peut être une URL complète, la base d'une URL ou bien une expression régulière.
+
+\subsection{Création des réponses}
+
+La mise en place de ChatWindow dans le Backoffice a permis de réutiliser les éléments déjà en place et d'enrichir les réponses possibles. Avant l'apparition de cette section, les actions rapides pouvaient être liées à une intention, une réponse texte ou bien à une redirection vers une URL donnée.
+
+Bien que ces trois éléments étaient déjà présent lorsque la configuration du \textit{chatbot} ne se faisait que via l'édition d'un fichier JSON, l'interface permet de visualiser les éléments de réponse :
+\begin{itemize}
+	\item l'intention sélectionné est affichée via son nom au lieu de son identifiant
+	\item une réponse texte est affichées avec le style interprété (éditeur WYSIWYG)
+	\subitem - ces réponses sont sauvegardées de la même manière que celles liées à une intention, de cette façon plusieurs réponses successives peuvent être ajouter et des médias peuvent y être joints.
+	\item la redirection URL est validée avant sauvegarde (expression régulière)
+\end{itemize}
 
 \section{Interface conversationnelle}
 
+L'interface conversationnelle se présente sous la forme d'une page entière (à contrario du \textit{chatbot}). Utilisée comme moteur de recherche, cette interface peut tout de même répondre aux questions liées à des intentions.
+
+La partie recherche est augmentée par le NLP ce qui permet de détecter les filtres possibles dans la recherche de l'utilisateur (localisation, salaire, loyer, surface, etc\dots). Cette solution rend l'expérience de recherche plus simple pour l'utilisateur, permettant ainsi d'effectuer des recherches en utilisant le langage naturel.
+
+La particularité de l'interface conversationnelle est qu'un seul projet gère les intégrations de plusieurs clients. En effet, la réalisation de ce projet est orientée \textit{config-first}. C'est à dire que chaque élément spécifique au client (nommage, pages disponibles, filtres disponible, etc\dots) est entièrement géré dans un dossier de configuration qui lui ait propre. Par la suite, l'application du client peut-être générée grâce à Webpack qui nous permet de sélectionner la bonne configuration facilement avec les variables d'environnement.
+
+\subsection{La page d'aiguillage}
+
+La page d'aiguillage est un nouvel ajout nécessaire pour l'intégration d'un client. Celle-ci permet de récupérer le résultat de plusieurs flux de données, selon une recherche donnée, et de présenter les dix premiers résultats.
+
+Avant la création de cette page, plusieurs flux pouvaient être géré par l'interface mais pas de façon simultanée. Une recherche était liée à un flux unique.
+
+Cette particularité a demandé la modification d'une partie des composants avec l'ajout d'une page entière.
+
+\begin{info}
+	Ma participation sur ce projet n'a pas été importante. Cependant, l'approche \textit{config-first} a été une nouveautée avec laquelle j'ai apprécier travailler malgré les difficultées rencontrées. J'ai pu enrichir les composants globaux ainsi que ceux spécifiques à un projet.
+
+	Le principale difficulté ici est de s'intégrer à l'existant : comprendre le fonctionnement des configurations, la manière de récupérer la configuration selon la page courante, etc\dots
+\end{info}
+
+\section{Optimisation Chat-Window}
+
+Le \textit{Chat-Window} est le produit le plus commercialisé par KMB Labs. Au fur et à mesure des ajouts le poids du script JavaScript permettant son exécution a augmenté et est devenue problématique.
+
+En effet, le temps de chargement du script, pourtant décalé vis à vis du chargement du site hôte, provoque des ralentissements pour l'utilisateur. Ce ralentissement dépend de la machine utilisée ainsi que du débit internet, cependant il existe.
+
+Pour palier ce problème, j'ai réalisé des recherches quant aux possibilités à notre disposition pour remédier à ce problème.
+
+\begin{problem}
+	Comment diminuer le poids du \textit{bundle} tout en gardant l'intégralité des fonctionnalités disponibles ?
+\end{problem}
+
+\subsection{Webpack - Chunks}
+
+React embarque l'outil Webpack afin de compresser tout un projet web dans un seul fichier JavaScript.
+
+Diverses plugins et options permettent de découper les projets afin de séparer les ressources. Globablement, l'utilisation des \textit{chunks} est souvent utilisée pour séparer les \textit{assets} ainsi que les modules issue de Node.js et de NPM dans des chunks à part. Ceux-ci étant rarement modifié, les chunk resteront en cache dans le navigateur et ne seront chargé qu'une seule fois.
+
+Cette solution n'empêche pas les ralentissement au premier chargement, mais peut grandement accélérer les chargements ultérieurs. Or, dans le cas de chatbot, l'utilisateur n'est pas forcément amené à utiliser régulièrement l'assistant. J'ai donc cherché une autre possibilité permettant de charger les modules uniquement au moment de leur première utilisation.
+
+\subsection{Les imports dynamiques}
+
+L'ECMAScript 2020 voit apparaître la possibilité d'import dynamique via la fonction \textbf{import()}. Cette fonction va retourner une \textit{Promise} à l'import d'un module.
+
+En rencontrant cette notation lors du processus de \og\textit{bundling}\fg{}, Webpack va autommatiquement commencer à découper le code sous-jacent en chunk indépendant tout en regroupant les dépendances communes à plusieurs chunk.
+
+La grande force de cette approche est que React propose depuis la version 17 les outils nécessaires à son utilisation. Chaque composant peut donc utiliser cette fonction pour charger sa dépendance à l'intérieur même de celui-ci (au lieu d'un import en début de fichier en temps normal).
+
+Les composants fonctionnels deviennent alors des fonctions asynchrones, en utilisant la notation \textit{async/await} pour importer les modules et ainsi permettre d'attendre le téléchargement du module la première fois que le composant est rendu dans le DOM.
+
+\begin{info}
+	À l'état actuel du projet de Chat Window, cette approche ne peut être utilisée car nécessite la dernière version des différents outils (Webpack et React). Cependant, d'autres dépendances sont également impactées car leur version n'est pas compatible avec la mise à jour de ces deux outils.
+
+	La première étape pour la réalisation de cette optimisation est de mettre à jour toutes les dépendances nécessaires avant de pouvoir commencer à mettre à jour le code.
+\end{info}
+
+\begin{result}
+	Cette approche a été choisie car permet un découpage plus précis du code permettant d'avoir un chargement initial comportant uniquement les éléments vitals à l'affichage de la bulle du \textit{chatbot} sans charger tous les comportements de la fenêtre.
+\end{result}
+
 \chapter{Conslusion}
-% conclude
+
+\chapter{Annexes}
+
+\section{Paramètres du projet}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{pictures/template_selector.png}
+	\caption{Page de paramétrage d'un projet}
+	\label{fig:parameters}
+\end{figure}
+
+\newpage
+\section{ML Monitor}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{pictures/mlmonitor_test.png}
+	\caption{Page de test de ML Monitor}
+	\label{fig:mlmonitor_test}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{pictures/mlmonitor_intentions.png}
+	\caption{Page listant les intentions de ML Monitor}
+	\label{fig:mlmonitor_intentions}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{pictures/mlmonitor_training.png}
+	\caption{Page d'entraînement de ML Monitor}
+	\label{fig:mlmonitor_training}
+\end{figure}
+
 \end{document}
