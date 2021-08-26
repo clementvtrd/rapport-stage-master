@@ -109,13 +109,27 @@ Maitre de stage : \textbf{Paul Leménager}\\
 \thispagestyle{empty}
 \addtocontents{toc}{\protect\thispagestyle{empty}}
 
+\chapter*{Remerciements}
+	\paragraph{}
+	Je tiens à remercier Alexandre Ragaleux pour m'avoir permis de réaliser mon stage au sein d'une équipe dynamique.
+
+	Je remercie également Paul Leménager qui a pris le temps de m'expliquer le fonctionnement de tous les éléments techniques me permettant de m'intégrer rapidement à l'équipe.
+
+	Je remercie l'équipe dans son intégralité pour sa patience et sa bienveillance à mon égare, pour avoir éclairci les morceaux de codes obscures et pour la bonne ambiance au travail, ainsi que les nombreuses parties de Smash lors des pauses déjeuner.
+
+	Enfin je remercie mes camarades de promotion avec qui j'ai pu apprendre dans la bonne humeur, et ensemble nous avons pris le temps de découvrir et maîtriser les outils qui seront notre quotidien.
+
 \begin{abstractpage}
 	\begin{abstract}{french}
-		Résumé en français
+		Pour mon stage, j'ai eu la chance d'intégrer une jeune start-up, KMB Labs, utilisant des technologies émergentes telles qu'AWS et Serverless. J'ai pu participer au développement de solutions utilisant ces services et comprendre les avantages qui leurs sont propres. KMB Labs est spécialisée dans les interfaces conversationnelles (\textit{chatbot}, moteur de recherche) facilitant le parcours de l'utilisateur dans les sites clients.
+
+		KMB Labs articule ses services autours de plusieurs grands projets, certains côté serveur, d'autres servant d'interface avec le client ou bien avec l'utilisateur. On y retrouve la fenêtre du \textit{chatbot}, le produit phare de KMB Labs, une interface conversationnelle couplé à un moteur de recherche, un Backoffice permettant de fournir les éléments de réponses ainsi que l'instance serveur permettant de gérer les requêtes des différentes interfaces. Le tout est couplé avec une puissante API développée avec les services AppSync (GraphQL), Lambda et API Gateway de AWS.
 	\end{abstract}
 
 	\begin{abstract}{english}
-		English resume
+		During my internship, I had the chance to work with KMB Labs, a new start-up that uses new technologies like AWS or Serverless. I was able to work on improving existing projects and understand the benefits of these tools. KMB Labs specializes in conversational interfaces (chatbot, search engine) that facilitate the user experience within the client's website.
+
+		KMB Labs develops few services to achieve this. There's the chatbot, of course, and a conversational interface that works with a powerful search engine. There is also a Backoffice that allows the client to provide a response item as well as a server instance for each client's project. All of these also communicate to an efficient API created with AWS AppSync, Lambda, and API Gateway services to provide the GraphQL API.
 	\end{abstract}
 \end{abstractpage}
 
@@ -123,27 +137,27 @@ Maitre de stage : \textbf{Paul Leménager}\\
 
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
-KMB Labs\footnote{Anciennement Kick My Bot} est une entreprise de développement web spécialisé dans les assistants conversationnels et moteurs de recherches. L'équipe propose à ses clients d'intégrer, au choix, un moteur de recherche spécifique au site client ainsi qu'un assistant chatbot.
+KMB Labs\footnote{Anciennement Kick My Bot} est une entreprise de développement web spécialisée dans les assistants conversationnels et moteurs de recherches. L'équipe propose à ses clients d'intégrer, au choix, un moteur de recherche spécifique au site client ainsi qu'un assistant chatbot.
 
 Avec en tout 6 employés, KMB Labs possède à son actif plusieurs projets menés à bien dont la plupart sont connus du grand public, tant dans l'immobilier (\textit{Guy Hoquet}, \textit{Century 21}) que dans le recrutement (\textit{Adecco}, \textit{Carrefour}, \textit{La Poste}).
 
-Le domaine des entreprises visées par l'expertise de KMB Labs tant à se diversifier afin d'accueillir des chatbots spécialisés dans d'autres domaines (comme des chatbot interne à une entreprise mise à disposition pour ses employés).
+Le domaine des entreprises visées par l'expertise de KMB Labs tend à se diversifier afin d'accueillir des chatbots spécialisés dans d'autres domaines (comme des chatbots internes à une entreprise mis à disposition pour ses employés).
 
 \begin{quote}
 	\og \textit{Nous mettons en relation la dernière génération d'algorithmes de matching avec notre technologie d'analyse texte - et tout cela en une fraction de seconde.}\fg{}\\
 	\textbf{Vu sur kmblabs.com}
 \end{quote}
 
-Lors de ce stage, plusieurs missions m'ont été confiées afin de participer à la mise en place de différentes fonctionnalités afin d'améliorer les applications déjà en place. Après une présentation du contexte et des différentes parties composant les services fournies par KMB Labs, je m'efforcerai de détailler mon implication dans chacun des projets auquels j'ai pu participer pendant toute la durée de mon stage.
+Lors de ce stage, plusieurs missions m'ont été confiées afin de participer à la mise en place de différentes fonctionnalités et d'améliorer les applications déjà en place. Après une présentation du contexte et des différentes parties composant les services fournis par KMB Labs, je m'efforcerai de détailler mon implication dans chacun des projets auquels j'ai pu participer pendant toute la durée de mon stage.
 
 \chapter{Contexte}
-Notre époque connait un nombre croissant d'entreprises choisissant de réaliser une vitrine sur le web et d'y proposer des services via celui-ci. Certains site peuvent devenir une structure conséquente de données, aussi bien dû aux nombreux services proposés qu'aux informations dont ils disposent. Même si certaines pratiques, commes les foires aux questions, tandent à regrouper les questions les plus fréquentes des utilisateurs, cela ne saurait regrouper efficacement toutes les informations d'un site.
+Notre époque connait un nombre croissant d'entreprises choisissant de réaliser une vitrine sur le web et d'y proposer des services via celui-ci. Certains sites peuvent devenir une structure conséquente de données, aussi bien dû aux nombreux services proposés qu'aux informations dont ils disposent. Même si certaines pratiques, commes les foires aux questions, tendent à regrouper les questions les plus fréquentes des utilisateurs, cela ne saurait regrouper efficacement toutes les informations d'un site.
 
-Pour remédier à cette problématiques, plusieurs approches ont été utilisées. Les barres de recherches, indexant le contenu des différentes pages ainsi que des fenêtres permettant de communiquer avec un support sous la forme d'une discussion.
+Pour remédier à cette problématique, plusieurs approches ont été utilisées. Les barres de recherches, indexant le contenu des différentes pages ainsi que des fenêtres permettant de communiquer avec un support sous la forme d'une discussion.
 
-Cependant, la première approche n'est pas forcément intuitive pour les plus néophites (là où on recherche une certaine information, il faudra choisir les bons mot-clefs pour obtenir le résultat escompté). La deuxième solution nécessite du personnel pour répondre aux questions des utilisateurs.
+Cependant, la première approche n'est pas forcément intuitive pour les plus néophites (là où on recherche une certaine information, il faudra choisir les bons mot-clefs pour obtenir le résultat escompté). La deuxième solution nécessite du personnel pour répondre aux questions des utilisateurs, le coût de cette solution peut donc augmenter graduellement si le flux d'utilisateurs augmente.
 
-Avec l'émergence des systèmes de NLP\footnote{Natural Language Processing} chacune de ses deux approchent ont pu grandement évoluée. Ces outils permettent d'avoir une compréhension plus profonde de ce que recherche l'utilisateur afin de l'aiguiller vers le contenu qu'il recherche avec une plus grande facilité.
+Avec l'émergence des systèmes de traitement du langage naturel\footnote{Natural Language Processing, abrégé ci-après NLP} chacune de ses deux approchent ont grandement évolué. Ces outils permettent d'avoir une compréhension plus profonde de ce que recherche l'utilisateur afin de l'aiguiller vers le contenu qu'il recherche avec une plus grande facilité.
 
 L'objectif ici est de permettre à l'utilisateur de faire des requêtes à une interface en formant des phrases ou bien en parlant via un micro. Cette solution permet d'avoir une solution conviviale pour répondre aux questions de l'utilisateur et de pouvoir le rediriger vers le contenu souhaité rapidement, sans mobiliser de personnel.
 
@@ -151,7 +165,7 @@ L'objectif ici est de permettre à l'utilisateur de faire des requêtes à une i
 
 Les différentes parties de se rapport seront étroitement liées aux intentions. Les différents services proposés par KMB Labs cherche à détecter l'intention de l'utilisateur pour lui fournir la réponse la plus appropriée.
 
-Ainsi, les différentes entités grammaticales\footnote{Sujet, action, etc\dots} nécessaires à la réalisation de l'intention sont extraites. De fait, une utilisateur cherchant à contacter une personne de l'entreprise pourra formuler sa demande de plusieurs façons :
+Ainsi, les différentes entités grammaticales\footnote{Sujet, action, etc\dots} nécessaires à la réalisation de l'intention sont extraites. De fait, un utilisateur cherchant à contacter une personne de l'entreprise pourra formuler sa demande de plusieurs façons :
 \begin{itemize}
 	\item \og je peux joindre quelqu'un de chez vous ?\fg{}
 	\item \og vous avez un numéro de téléphone ?\fg{}
@@ -159,28 +173,75 @@ Ainsi, les différentes entités grammaticales\footnote{Sujet, action, etc\dots}
 	\item etc\dots
 \end{itemize}
 
-Toutes ses manières, et bien d'autres encore, permettent de rediriger vers une page précise contenant les informations, ou bien de donner les informations nécessaire à la prise de contact. L'important est que l'\textit{intention} de l'utilisateur pour toutes ces phrases est la même.
+Toutes ses manières, et bien d'autres encore, permettent de rediriger vers une page précise contenant les informations, ou bien de donner les informations nécessaire à la prise de contact via la fenêtre du chatbot. L'important est que l'\textit{intention} de l'utilisateur pour toutes ces phrases est la même.
+
+\section{NLP Provider}
+
+Les fournisseurs de traitement du langage naturel, ou \textit{NLP Providers}, sont des services externes qu'utilise KMB Labs.
+
+L'objectif de ces \textit{providers} est de pouvoir analyser les demandes formuler en langue naturelle\footnote{Parfois même directement transcrit de l'oral}. Le résultat de l'analyse est de détecter l'intention, citée plus haut, qui se trouve dans le sens de la demande.
+
+Au lieu de simplement faire une recherche par mot clef, les \textit{providers} vont permettre d'entraîner des modèles de données. Chaque modèle aura un jeu spécifique d'intentions, lié à un domaine qui lui ai propre.
+
+Ainsi, quand un intention est mal détectée, le \textit{provider} associé est entrainé avec la phrase ainsi que ladite intention. On parle alors d'inférence : le \textit{provider}, une fois l'entraînement terminé, saura détecter l'intention pour cette phrase et celles qui s'en rapprochent.
+
+\section{Amazon Web Service}
+
+Amazon Web Service, ou AWS, est un fournisseur de service web. On y trouve des solutions pour toutes les problématiques liées aux applications connectées, que ce soit des applications mobiles, web ou bien même des jeux vidéos.
+
+Chaque service est spécialisé dans un domaine et peu être mis en relation avec d'autre. Dans ce rapport, il sera fait mention de DynamoDB, d'AppSync et de Lambda.
+
+\subsection*{DynamoDB}
+
+DynamoDB est un système de gestion de base de données NOSQL. De même que MongoDB, DynamoDB est orientée document. Spécialisée dans la gestion de grand volume de donnée, il est particulièrement adapté pour gérer les nombreuses données liées au catégories, intentions et phrases d'entrainement mentionnées ci-dessus.
+
+\subsection*{AppSync}
+
+AppSync est un service permettant de créer une API GraphQL. GraphQL est un langage dédié à la création d'API qui se veut agnostique à tout système de gestion de base de données.
+
+La puissance de GraphQL est de fournir uniquement les données demandées. Ainsi, en effectuant une requête pour une liste d'objet complexe, voir d'objets imbriqués, GraphQL peut extraire les attributs voulu de chaque objet, quelque soit le niveau d'imbrication pour peu que le type de l'objet ait été défini dans le schéma GraphQL.
+
+GraphQL regroupe les \textit{endpoint} en deux catégories, les \textit{queries} et les \textit{mutations}. Chacun de ces \textit{endpoints} est lié à un \textit{resolver} qui se charge de récupérer les données nécessaires pour qu'AppSync puis envoyer le résultat.
+
+Un \textit{resolver} est un morceau de code VTL\footnote{Langage propre à l'environnement AWS} permettant de :
+\begin{itemize}
+	\item intéragir directement avec DynamoDB
+	\item utiliser d'autres \textit{resolvers} (dans le cas des types imbriqués par exemple)
+	\item appeler plusieurs \textit{resolvers} à la suite (on parle alors de \textit{pipeline})
+	\item appeler une Lambda
+\end{itemize}
+
+\subsection*{Lambda}
+
+Les Lambda sont un outil très puissant dans l'univers d'AWS. Celle-ci prennent la forme de fonction codé dans les langages connus, depuis peu elle peuvent également utiliser un \textit{container} Docker.
+
+Elle fonctionne comme une source de donnée : liée à un \textit{resovler} elle reçoivent la requête via celui-ci, effectue les traitements nécessaire (récupération de données sur DynamoDB, filtre, etc...) puis retourne le résultat désiré. Étant codé dans le langage voulu, elles permettent de reporter une partie de la charge d'une application sur le serveur, allégeant ainsi la charge chez l'utilisateur.
 
 \chapter{KMB Labs}
 Afin de procurer ses services, KMB Labs a développé plusieurs applications et services web. Faisons une courte présentation de chacun de ses projets afin d'appréhender l'organisation de ceux-ci.
 
+
+\section{Le Framework}
+
+Le Framework constitue les ressources communes derrière chaque \textit{chatbot}. Il est nécessaire pour mettre en ligne une instance unique pour chaque client, et permet de fournir toute la logique pour le \textit{chatbot} (traitement des intentions, récupérations des réponses, sauvegarde des statistiques).\footnote{Merci à Paul pour cette définition précise.}
+
 \section{Les interfaces}
-\subsection{Le chatbot}
+\subsection*{Le chatbot}
 
-Le chatbot se présente comme une fenêtre de discussion, on peut y converser avec un assistant virtuel qui répondre à nos questions. En parlant naturellement via l'interface, l'intention de l'utilisateur y est détectée et une réponse lui ai donné.
+Le chatbot se présente comme une fenêtre de discussion, on peut y converser avec un assistant virtuel qui répond à nos questions. En parlant naturellement via l'interface, l'intention de l'utilisateur y est détectée et une réponse lui ai donné.
 
-Ladite réponse est préalablement fournie par le client afin de choisir quelles interrogations sont prises en charge, ou non, par l'assistant virtuel.
+La réponse est préalablement fournie par le client afin de choisir quelles intentions sont prises en charge, ou non, par l'assistant virtuel.
 
-La fenêtre peut-être agrémentée d'un onglet avec des questions pré-établies, un peu à la manière des foires aux questions, d'actions rapide où l'utilisateur n'a qu'à cliquer dessus pour obtenir le résultat rapidement.
+La fenêtre peut être agrémentée d'un onglet avec des questions pré-établies, un peu à la manière des foires aux questions, d'actions rapide où l'utilisateur n'a qu'à cliquer dessus pour obtenir le résultat rapidement.
 
-\subsection{L'interface conversationnelle}
-L'interface conversation prend la forme d'une barre de recherche sur une page complète. L'utilisateur peut décrire ce qu'il recherche (caractéristiques d'un appartement, les domaines de compétences d'un emploi, etc\dots) et le moteur se charge de :
+\subsection*{L'interface conversationnelle}
+L'interface conversationnelle prend la forme d'une barre de recherche sur une page complète. L'utilisateur peut décrire ce qu'il recherche (caractéristiques d'un appartement, les domaines de compétences d'un emploi, etc\dots) et le moteur se charge de :
 \begin{enumerate}
 	\item voir si une intention est détectée (à la manière du chatbot)
-	\item effectuer la recherche en appliquant les filtres trouvés la requête (localisation, salaire, loyer, etc\dots)
+	\item effectuer la recherche en appliquant les filtres trouvés dans la phrase de l'utilisateur (localisation, salaire, loyer, etc\dots)
 \end{enumerate}
 
-Cette interface se présente plus comme un moteur de recherche, mais l'intégration des systèmes NLP permettent une certaines flexibilités quant à la forme de la demande de l'utilisateur. Elle simplifie également l'utilisation, là où différents filtres (toujours existants) devaient être rempli manuellement, l'interface ici va remplir les filtres correspondant aux critères de recherche.
+Cette interface se présente plus comme un moteur de recherche, mais l'intégration des systèmes NLP permettent une certaine flexibilité quant à la forme de la demande de l'utilisateur. Elle simplifie également l'utilisation, là où différents filtres (toujours existants) devaient être rempli manuellement, l'interface ici va remplir les filtres correspondant aux critères de recherche.
 
 \section{Le Backoffice}
 
@@ -188,27 +249,30 @@ Le Backoffice est une application web permettant au client de paramétrer les r�
 
 Dans cette optique, plusieurs pages sont disponibles. En voici une présentation non exhausitve :
 \begin{itemize}
-\item l'éditeur : permet de définir les réponses du chatbot pour chaque intention disponible
+\item l'éditeur : permet de définir les réponses du \textit{chatbot} pour chacune des intentions disponibles
 \item les statistiques : regroupent des graphiques visant à informer le client du taux d'utilisation et de compréhension de sa solution conversationnelle fournie par KMB Labs
 \item ML\footnote{Machine Learning} Monitor : cette partie, pour utilisateur averti uniquement, permet de tester la compréhension d'une phrase et, si besoin, d'entrainer un modèle avec des phrases non comprises qui aurait dû l'être
-\item le Lab fourni une interface simple permettant de voir la configuration de la fenêtre du chatbot telle qu'elle serait dans le site de destination mis à part l'environnement graphique
+\item le Lab fourni une interface simple permettant de voir la configuration de la fenêtre du chatbot telle qu'elle serait dans le site de destination (mis à part l'environnement graphique)
 \end{itemize}
 
 \section{L'API}
 
-L'API a été écrite avec le langage GraphQL avec le service AppSync de Amazon Web Service\footnote{Abrégé \og AWS\fg{} ci-après}. Cette approche permet de ne récupérer que les données nécessaires  à l'usage, et ceux même si la structure et complexe.
+L'API a été écrite avec le langage GraphQL et mise en ligne avec le service AppSync de Amazon Web Service\footnote{Abrégé \og AWS\fg{} ci-après}. Cette approche permet de ne récupérer que les données nécessaires  à l'usage, et ceux même si la structure et complexe.
 
 AppSync donne la possibilité de lier le schéma à des \textit{resolvers}, qui sont en charge de retourner la donnée voulu. Ce procédé permet une grande flexibilité, les résolvers peuvent être associé à :
 \begin{itemize}
-	\item des requêtes directes aux bases de données (via le langage VTL)
-	\item des \textit{Lambda} qui sont des fonctions dans le langage désiré (Node.js, Python, Go, Java, etc\dots\footnote{Source : \url{https://aws.amazon.com/fr/lambda/}})
+	\item une requêtes directes aux bases de données (via le langage VTL pour DynamoDB)
+	\item une \textit{Lambda} qui sont des fonctions dans le langage désiré (Node.js, Python, Go, Java, etc\dots\footnote{Source : \url{https://aws.amazon.com/fr/lambda/}})
+	\item d'autres \textit{resolvers} qui se chargeront de récupérer des données différentes
 \end{itemize}
 
-La possibilité de pouvoir lier un résolver à une fonction permet d'y effectuer plusieurs traitement avec que les données ne soient retournées à l'application cliente. Conclusion, cela allège la complexité des applications utilisant les lambdas dans leur cycle de vie, ou plus précisément cela reporte une partie de la charge sur les serveurs d'AWS.
+La possibilité de pouvoir lier un \textit{resolver} à une fonction permet d'y effectuer plusieurs traitements. Ainsi, les données ne sont retournées à l'application cliente qu'après les avoir traité en amont. Conclusion, cela allège la complexité des applications utilisant les lambdas dans leur cycle de vie, ou plus précisément cela reporte une partie de la charge sur les serveurs d'AWS.
 
-\section{Le Framework}
-
-Le Framework est la base de chaque serveur derrière le chatbot. Il est nécessaire pour mettre en ligne une instance unique à chaque client qui va prendre en charge chaque requête des différentes interfaces.
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{pictures/kmb_univers.png}
+	\caption{Relation entre les différents projets de KMB Labs}
+\end{figure}
 
 \chapter{Projets}
 
@@ -220,8 +284,11 @@ Le premier projet auquel j'ai participé, afin de me faire à l'agencement du Ba
 
 Les projets, associé aux clients, doivent être lié à des modèles d'apprentissage pour permettre la compréhension d'un domaine. Faisons la comparaison entre l'immobilier et les ressources humaines.
 
+Chaque projet de client est lié à ce qu'on appelle une ou plusieurs catégories. Les catégories regroupent les intentions et sont liées à un \textit{provider}.
+
 Dans l'immobilier, le chatbot doit pouvoir comprendre les intentions liées loyer, prix d'achat et de vente, surface, etc\dots De l'autre côté, un chatbot lié aux ressources humaines devra comprendre les intentions liés aux horaires de travail, au salaire, etc\dots En plus des intentions spécifiques au domaine du chatbot vient s'ajouter des intentions plus générales comme les formules de politesse pour saluer l'utilisateur, réponde à ses remerciements et plus encore.
 
+On retrouve alors des catégories comme l'immobilier, le recrutement, les phrases de politesse, etc...
 
 \begin{problem}
 Pour associer un modèle de compréhension à un chatbot, une personne de chez KMB Labs devaient jusqu'alors sélectionner manuellement dans les paramètres du projet ledit modèle.
@@ -265,19 +332,24 @@ Associer un template à un projet à soulever des questions :
 	\item le template doit-il être associé par un identifiant au projet ?
 \end{itemize}
 
-Pour répondre à la deuxième question, il a fallu dans un premier temps définir les templates qui seront disponibles, avec la liste des catégories d'intentions qui leur seront liées. Puis voir si cela concorde avec les projets existants. Il y a quasiment toujours au moins une catégorie qui n'est pas dans le template qui est utilisé dans chacun des projets. De fait, nous devions garder les valeurs existantes, et toujours pouvoir ajouter une catégorie d'intentions sans pour autant ajouter un template.
+Pour répondre à la première question, il a fallu dans un premier temps définir les templates qui seront disponibles, avec la liste des catégories d'intentions qui leur seront liées. Puis voir si cela concorde avec les projets existants. Il y a quasiment toujours au moins une catégorie qui n'est pas dans le template qui est utilisée dans chacun des projets. De fait, nous devions garder les valeurs existantes, et toujours pouvoir ajouter une catégorie d'intentions sans pour autant ajouter un template.
 
 Pour le second point, la question a été répondue assez aisément. Même si les templates étaient stockés dans la base de données, associer l'identifiant d'un ou de plusieurs templates à un projet aurait demandé des modifications du schéma de l'API, des lambdas concernées et de créer les liaisons nécessaires pour récupérer les catégories associer au templates pour les ajouter à celles existantes du projet. Nous avons donc pris la décision de faire au plus simple : ajouter aux catégories du projets les catégories du templates, en excluant les doublons éventuels.
 
+Sur le plan de l'interface, une simple liste déroulante permettant de sélectionner un ou plusieurs templates a été ajouté parmi les différents paramètres pré-existant (Voir figure \ref{fig:parameters}).
 
-Sur le plan de l'interface, une simple liste déroulante permettant de sélectionner un ou plusieurs templates a été ajouté parmi les différents paramètres pré-existant\footnote{Voir figure \ref{fig:parameters} page \pageref{fig:parameters}}.
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{pictures/template_selector.png}
+	\caption{Page de paramétrage d'un projet}
+	\label{fig:parameters}
+\end{figure}
 
 \begin{result}
 	La sélection de templates est gérée dynamiquement en fonction des catégories sélectionnées. De fait, si l'on ajoute un template, on étend la liste des catégories actuelle du projet de façon à reproduire le comportement de l'utilisateur.
 
 	Ainsi, si on ajoute ou supprime une catégorie, la liste des templates est mise à jour en fonction des changements, sans que la base de données n'ait été mise à jour pour intégrer les templates aux projets.
 \end{result}
-
 
 \begin{info}
 	Ce premier projet m'a permis d'appréhender les différents concepts qui seront ré-utilisés dans les autres projets liés au Backoffice:
@@ -296,14 +368,41 @@ Sur le plan de l'interface, une simple liste déroulante permettant de sélectio
 	\end{itemize}
 \end{info}
 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{pictures/diag_template}
+	\caption{Schéma fonctionnel du système de template (coloré en vert)}
+\end{figure}
+
 \section{ML Monitor}
 
 ML Monitor est un outil visant à tester et entraîner les services NLP utilisés. Il est l'aboutissement de réflexion qui ont vu se succéder deux versions \textit{standalone}\footnote{L'outil se trouvait alors sur une application web externe au Backoffice}. J'ai eu la chance lors de ce stage de participer à l'intégration de cette outil au sein même du Backoffice.
 
-Cette intégration a permis de gérer d'une nouvelle manière l'entraînement ainsi que de tester\footnote{Voir figures pages \pageref{fig:mlmonitor_test}-\pageref{fig:mlmonitor_test}} des modèles de \textit{machine learning}. Une nouvelle API a été mise en place permettant d'unifier les interactions avec plusieurs fournisseurs NLP. Actuellement, deux fournisseurs sont utilisés : WIT et Luis (Microsoft). En utilisant cette interface entre NLP et le Backoffice, il est possible d'interagir les modèles de chaque fournisseur. Cette solution permet d'avoir un fournisseur de secours dans le cas où le fournisseur principal ne serait plus disponible.
+Cette intégration a permis de gérer d'une nouvelle manière l'entraînement ainsi que de tester (Voir figures ci-dessous) des modèles de \textit{machine learning}. Une nouvelle API a été mise en place permettant d'unifier les interactions avec plusieurs fournisseurs NLP. Actuellement, deux fournisseurs sont utilisés : WIT et Luis (Microsoft). En utilisant cette interface entre NLP et le Backoffice, il est possible d'interagir les modèles de chaque fournisseur. Cette solution permet d'avoir un fournisseur de secours dans le cas où le fournisseur principal ne serait plus disponible.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{pictures/mlmonitor_test.png}
+	\caption{Page de test de ML Monitor}
+	\label{fig:mlmonitor_test}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{pictures/mlmonitor_intentions.png}
+	\caption{Page listant les intentions de ML Monitor}
+	\label{fig:mlmonitor_intentions}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{pictures/mlmonitor_training.png}
+	\caption{Page d'entraînement de ML Monitor}
+	\label{fig:mlmonitor_training}
+\end{figure}
 
 \begin{figure}[!ht]
-	\includegraphics[width=\textwidth]{pictures/diagram_mlmonitor.png}
+	\includegraphics[width=0.9\textwidth]{pictures/diagram_mlmonitor.png}
 	\caption{Schéma fonctionnel de ML Monitor}
 \end{figure}
 
@@ -320,7 +419,7 @@ Cette intégration a permis de gérer d'une nouvelle manière l'entraînement ai
 
 \subsection{Gestion des fournisseurs NLP}
 
-Un des points auquel j'ai pu participer activement est la gestion de multiple fournisseurs NLP\footnote{Mentionné "provider" ci-après.} sur l'interface.
+Un des points auquel j'ai pu participer est la gestion de multiple fournisseurs NLP\footnote{Mentionné "provider" ci-après.} sur l'interface.
 
 En effet, même si la venu de l'API permettant d'utiliser plusieurs providers de façon simultanée, il est nécessaire de pouvoir visualiser les données d'un seul en particulier.
 
@@ -330,6 +429,20 @@ La lambda, qui se présente sous la forme d'une fonction Node.JS dans notre cas\
 
 Une fois fait, le schéma GraphQL de l'API a dû être mis à jour avec la nouvelle \textit{query}, et lier la source de données de la \textit{query getProviders} à la lambda en utilisant Serverless.
 
+\subsection{L'entraînement des modèles}
+
+Le second point qui a été ma principale participation et l'ajout de l'interface permettant d'entrainer le modèle lié à une intention. L'objectif de cette interface est de pouvoir entrainer un modèle avec plusieurs phrases.
+
+De cette façon, les phrases d'entraînements peuvent être rédigées au préalable, via un tableur par exemple, et une fois validée par les personnes compétences, peuvent être importer dans le modèle via un simple copier/coller.
+
+La mise en place de cette solution a nécessité quelques ajustements, notamment au niveau du schéma de l'API afin de prendre en charge une liste de phrases et non plus une simple phrase, afin de limiter les appels à l'API, puis de modifier la \textit{lambda} associé en conséquence.
+
+La lambda a pour objectif de :
+\begin{enumerate}
+	\item mettre à jour la base de données DynamoDB (qui fait foi dans le cas d'un entraînement de l'intégralité du modèle)
+	\item ajouter les phrases dans chaque provider et lancer la procédure d'inférence afin que les changements soit pris en compte le plus rapidement possible
+\end{enumerate}
+
 \section{Éditeur WYSIWYG}
 
 L'éditeur WYSIWYG\footnote{What You See Is What You Get} est un ajout que j'ai pu réaliser, avec l'intégration de Draft.js\footnote{Facebook opensource} et de différents plugins permettant ainsi d'obtenir un éditeur plus agréable pour l'utilisateur.
@@ -337,6 +450,7 @@ L'éditeur WYSIWYG\footnote{What You See Is What You Get} est un ajout que j'ai 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[scale=0.75]{pictures/wysiwyg.png}
+	\caption{Aperçu de l'éditeur tel qu'il est présent dans le Backoffice}
 \end{figure}
 
 Cette éditeur a été utilisé en remplacement d'un éditeur plus basic où le style n'était pas interprété. Le format utilisé nativement par l'éditeur est de l'HTML, cependant un système de conversion a été mis en place afin de correspondre aux formats utilisés dans les fenêtres de discussion de \textit{chatbot}.
@@ -345,6 +459,8 @@ Cette éditeur a été utilisé en remplacement d'un éditeur plus basic où le 
 	L'éditeur est une partie plus accessoire mais qui a vu quelques complications dû à la gestion de l'état de l'éditeur Draft.JS.
 
 	Celui-ci est assez complexe, et comme tous les composants React, doit être prédictible. De fait, chaque modification manuelle implique de reconstruire l'état en utilisant les valeurs précédentes pour garder un éditeur stable (sélection, position du curseur, style, etc\dots).
+
+	De plus, la gestion des tags personnalisés en lieu et place des balises HTML a nécessité la mise en place d'expression régulière permettant de sélectionner les tags pour l'import dans l'éditeur, puis des balises HTML pour l'export.
 \end{info}
 
 \section{ChatWindow}
@@ -363,7 +479,7 @@ L'avantage des \textit{Fast Actions} est que le \textit{chatbot} n'utilise pas l
 
 Afin de donner une certaine polyvalence aux \textit{Fast Actions}, celle-ci sont regroupées par page. Chaque page possède une configuration qui lui est propre et qui est configurage via l'interface ChatWindow. On peut donc spécifier une URL d'activation, qui peut être une URL complète, la base d'une URL ou bien une expression régulière.
 
-\subsection{Création des réponses}
+\subsection*{Création des réponses}
 
 La mise en place de ChatWindow dans le Backoffice a permis de réutiliser les éléments déjà en place et d'enrichir les réponses possibles. Avant l'apparition de cette section, les actions rapides pouvaient être liées à une intention, une réponse texte ou bien à une redirection vers une URL donnée.
 
@@ -417,6 +533,13 @@ Diverses plugins et options permettent de découper les projets afin de séparer
 
 Cette solution n'empêche pas les ralentissement au premier chargement, mais peut grandement accélérer les chargements ultérieurs. Or, dans le cas de chatbot, l'utilisateur n'est pas forcément amené à utiliser régulièrement l'assistant. J'ai donc cherché une autre possibilité permettant de charger les modules uniquement au moment de leur première utilisation.
 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{pictures/webpack_chunks.png}
+	\caption{Exemple de répartition manuelle des chunks}
+\end{figure}
+
+\newpage
 \subsection{Les imports dynamiques}
 
 L'ECMAScript 2020 voit apparaître la possibilité d'import dynamique via la fonction \textbf{import()}. Cette fonction va retourner une \textit{Promise} à l'import d'un module.
@@ -427,10 +550,20 @@ La grande force de cette approche est que React propose depuis la version 17 les
 
 Les composants fonctionnels deviennent alors des fonctions asynchrones, en utilisant la notation \textit{async/await} pour importer les modules et ainsi permettre d'attendre le téléchargement du module la première fois que le composant est rendu dans le DOM.
 
-\begin{info}
-	À l'état actuel du projet de Chat Window, cette approche ne peut être utilisée car nécessite la dernière version des différents outils (Webpack et React). Cependant, d'autres dépendances sont également impactées car leur version n'est pas compatible avec la mise à jour de ces deux outils.
+Dans le diagrame ci-dessous, un exemple de chunks dynamiques regroupés par couleur.
 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{pictures/dynamics_imports.png}
+	\caption{Example de répartition dynamique des chunks}
+\end{figure}
+
+\begin{info}
 	La première étape pour la réalisation de cette optimisation est de mettre à jour toutes les dépendances nécessaires avant de pouvoir commencer à mettre à jour le code.
+
+	Ensuite, la conversion des composants basés sur le système de \textit{class} vers les \textit{functional components} s'est avéré obligatoire afin d'utiliser les outils fournis par React.
+
+	Une fois fait, les modules les plus lourd ont été ciblé en premier lieu afin d'obtenir un résultat probant le plus rapidement possible afin d'alléger le poids du build pour tous les clients utilisant le \textit{chatbot}.
 \end{info}
 
 \begin{result}
@@ -439,39 +572,10 @@ Les composants fonctionnels deviennent alors des fonctions asynchrones, en utili
 
 \chapter{Conslusion}
 
-\chapter{Annexes}
+Lors de ce stage, j'ai pu participer au développement de solutions basées sur des technologies du traitement du langage naturel. KMB Labs est une start-up composée d'une petite équipe de développeurs utilisant des technologies en vogues (aussi bien pour les interfaces utilisateurs que pour la partie serveur).
 
-\section{Paramètres du projet}
+Ayant participer à de nombreux ajouts de fonctionnalités, j'ai eu l'occasion d'appréhender les enjeux d'un produit commercialisé, avec parfois des problèmes non répertoriés lors des tests qui sont remontés par des clients ; les complications dû à des refontes d'une partie du code. Mais aussi le travail en équipe avec chaque interlocuteur ayant une spécialité, aussi bien en terme de technologies que d'algorithmies ; où l'échange encouragé malgré la pandémie par des outils adaptés (Slack, Google Meet) permet de garder un contact humain.
 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{pictures/template_selector.png}
-	\caption{Page de paramétrage d'un projet}
-	\label{fig:parameters}
-\end{figure}
-
-\newpage
-\section{ML Monitor}
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{pictures/mlmonitor_test.png}
-	\caption{Page de test de ML Monitor}
-	\label{fig:mlmonitor_test}
-\end{figure}
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{pictures/mlmonitor_intentions.png}
-	\caption{Page listant les intentions de ML Monitor}
-	\label{fig:mlmonitor_intentions}
-\end{figure}
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{pictures/mlmonitor_training.png}
-	\caption{Page d'entraînement de ML Monitor}
-	\label{fig:mlmonitor_training}
-\end{figure}
+Ce stage a été pour moi l'occasion de découvrir un monde professionnel dynamique évoluant dans mon domaine d'étude. Où la théorie fait place à de vraies solutions qui ont sû faire leur place sur le marché.
 
 \end{document}
